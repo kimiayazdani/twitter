@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block body_block %}
+    <style>
+        .tweet-section {
+            width: 100%;
+            height: auto;
+            padding: 15px;
+            border-radius: 5px;
+            position: relative;
+            border: 1px solid #fff;
+        }
+
+        .tweet-section:after {
+            top: 100%;
+            left: 50px;
+            border: solid transparent;
+            content: " ";
+            position: absolute;
+            border-top-color: #fff;
+            border-width: 15px;
+            margin-left: -15px;
+        }
+
+        .tweet-desc {
+            margin-top: 20px;
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        .tweet-desc img {
+            border: 1px solid #f5f5f5;
+            border-radius: 150px;
+            height: 70px;
+            padding: 3px;
+            width: 70px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .tweet-information {
+            display: inline-block;
+            vertical-align: top;
+            padding-left: 10px;
+        }
+
+        .tweet.tweet-default .tweet-section {
+            color: #fff;
+            border-color: #777;
+            background-color: #777;
+        }
+
+        .tweet.tweet-default .tweet-section:after {
+            border-top-color: #777;
+        }
+
+        .tweet.tweet-default .tweet-desc img {
+            border-color: #777;
+            background-color: #777;
+        }
+
+        .tweet.tweet-default .tweet-writer-name {
+            color: #777;
+        }
+
+
+        .tweet.tweet-info .tweet-section {
+            color: #fff;
+            background-color: #5bc0de;
+            border-color: #46b8da;
+        }
+
+        .tweet.tweet-info .tweet-section:after {
+            border-top-color: #5BC0DE;
+        }
+
+
+        .tweet.tweet-info .tweet-desc img {
+            border-color: #46b8da;
+            background-color: #5bc0de;
+        }
+
+        .tweet.tweet-info .tweet-writer-name {
+            color: #5BC0DE;
+        }
+
+        .tweet.tweet-success .tweet-section {
+            color: #fff;
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+
+        .tweet.tweet-success .tweet-section:after {
+            border-top-color: #5CB85C;
+        }
+
+        .tweet.tweet-success .tweet-desc img {
+            border-color: #4cae4c;
+            background-color: #5cb85c;
+        }
+
+        .tweet.tweet-success .tweet-writer-name {
+            color: #5CB85C;
+        }
+
+        .tweet.tweet-warning .tweet-section {
+            color: #fff;
+            background-color: #f0ad4e;
+            border-color: #eea236;
+        }
+
+        .tweet.tweet-warning .tweet-section:after {
+            border-top-color: #F0AD4E;
+        }
+
+        .tweet.tweet-warning .tweet-desc img {
+            border-color: #eea236;
+            background-color: #f0ad4e;
+        }
+
+        .tweet.tweet-warning .tweet-writer-name {
+            color: #F0AD4E;
+        }
+
+        .tweet.tweet-danger .tweet-section {
+            color: #fff;
+            background-color: #d9534f;
+            border-color: #d43f3a;
+        }
+
+        .tweet.tweet-danger .tweet-section:after {
+            border-top-color: #D9534F;
+        }
+
+        .tweet.tweet-danger .tweet-desc img {
+            border-color: #d43f3a;
+            background-color: #D9534F;
+        }
+
+        .tweet.tweet-danger .tweet-writer-name {
+            color: #D9534F;
+        }
+    </style>
+
+    <div class="jumbotron" style="margin-top: 10%;">
+        {% for thing in things %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="{{ color }}">
+                        <div class="tweet-section">
+                            {{ thing.content }}
+                        </div>
+                        <div class="tweet-desc">
+                            {% if thing.user.avatar %}
+                                <img src="{{ thing.user.avatar.url }}" alt=""/>
+                            {% else %}
+                                <img src="{{ MEDIA_URL }}no_profile.png" alt=""/>
+                            {% endif %}
+                            <div class="tweet-information">
+                                <h4 class="tweet-writer-name" style="font-weight:bold"> {{ thing.name }}</h4>
+                                <h6>{{ thing.user.first_name }} {{ thing.user.last_name }} </h6>
+                                <p>{{ thing.user.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

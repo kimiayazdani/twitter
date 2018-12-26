@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block body_block %}
+    <div class="jumbotron" style="margin-top: 25%;">
+        <form method="post" action="{% url 'twitterApp:login' %}">
+            <h2 style="margin-bottom: 25px;"> Login Form: </h2>
+            {% csrf_token %}
+
+            <label for="username"> Username: </label>
+            <input type="text" placeholder="Enter your username" name="username" style="margin-right: 40px;">
+
+            <label for="password"> Password: </label>
+            <input type="password" placeholder="Enter your password" name="password" style="margin-right: 40px">
+
+            <input type="submit" class="btn btn-primary" value="Login">
+        </form>
+        {% if danger %}
+        <div class="alert alert-info" style="margin-top: 10px;" role="alert">
+            {{ danger }}
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

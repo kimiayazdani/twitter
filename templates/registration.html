@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block body_block %}
+    <div class="jumbotron" style="margin-top: 25%;">
+        <form method="post">
+            <h2 style="margin-bottom: 25px;"> Registration Form: </h2>
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary" value="submit">
+        </form>
+    </div>
+{% endblock %}

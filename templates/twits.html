@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block body_block %}
+    <div class="jumbotron" style="margin-top: 25%;">
+        <form method="post" action="{% url "twitterApp:tweet" %}"
+              style="
+              display: flex;
+              flex-direction: column;
+                ">
+            <h2 style="margin-bottom: 25px;"> Hello {{ user.username }} <br/> Create a new Tweet: </h2>
+            {% csrf_token %}
+            <label for="username"> Tweet Name: </label>
+            <input type="text" placeholder="Enter your tweet name" name="name">
+            <div style="min-height: 20px;"></div>
+            <label for="password"> Tweet Content: </label>
+            <textarea name="content" placeholder="Enter your tweet content"></textarea>
+            <input type="submit" class="btn btn-primary" style="margin-top: 20px;" value="Tweet">
+        </form>
+    </div>
+{% endblock %}
