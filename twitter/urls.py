@@ -23,8 +23,10 @@ import api.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('v1/', include('twitterApp.urls')),
+    path('v/', include('twitterApp.urls')),
     path('logout/', views.user_logout, name='logout'),
+    path('', views.see_tweets, name="home"),
+    path('accounts/', include('allauth.urls')),
     path('', views.see_tweets, name="home"),
     path('api/', include(api.urls))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

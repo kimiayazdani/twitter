@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
+{% load socialaccount %}
 
 {% block body_block %}
     <div class="jumbotron" style="margin-top: 25%;">
@@ -8,6 +9,9 @@
             {{ form.as_p }}
             {% csrf_token %}
             <input type="submit" class="btn btn-primary" value="submit">
+
+            <a style="text-decoration: none; color: black; margin-top: 20px;" class="btn btn-warning"
+               href="{% provider_login_url 'google' %}">Sign up with Gmail</a>
         </form>
     </div>
 {% endblock %}

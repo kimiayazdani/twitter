@@ -28,14 +28,14 @@ def twit(request):
     return render(request=request, template_name='twits.html')
 
 
-def user_login(request, dng=None):
+def user_login(request, dng=None, backend='django.contrib.auth.backends.ModelBackend'):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         print(username + " " + password)
         user = TwitterUser.objects.get(username=username, password=password)
         if user:
-            login(request, user)
+            login(request, user, backend)
             return HttpResponseRedirect(reverse('home'))
         else:
             return user_login(request, "Wrong username or password")
