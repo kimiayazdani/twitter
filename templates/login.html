@@ -10,14 +10,16 @@
             <input type="text" placeholder="Enter your username" name="username" style="margin-right: 40px;">
 
             <label for="password"> Password: </label>
-            <input type="password" placeholder="Enter your password" name="password" style="margin-right: 40px">
+            <input type="password" placeholder="Enter your password" name="password">
 
-            <input type="submit" class="btn btn-primary" value="Login">
+            <input type="submit" class="btn btn-info" value="Login">
+            <a style="text-decoration: none; color: black; margin-top: 20px;" class="btn btn-warning"
+               href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
         </form>
         {% if danger %}
-        <div class="alert alert-info" style="margin-top: 10px;" role="alert">
-            {{ danger }}
-        </div>
+            <div class="alert alert-info" style="margin-top: 10px;" role="alert">
+                {{ danger }}
+            </div>
         {% endif %}
     </div>
 {% endblock %}

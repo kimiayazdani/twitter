@@ -15,14 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import include
+from django.conf.urls import include, url
 from twitterApp import views
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('v1/', include('twitterApp.urls')),
-    path('logout/', views.user_logout, name='logout'),
-    path('', views.see_tweets, name="home")
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  path('admin/', admin.site.urls),
+                  path('v1/', include('twitterApp.urls')),
+                  url(r'^login', views.user_login, name='login'),
+                  path('logout/', views.user_logout, name='logout'),
+                  url(r'^$', views.see_tweets, name="home"),
+                  url(r'^auth/', include('social_django.urls', namespace='social')),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

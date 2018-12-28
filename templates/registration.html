@@ -8,6 +8,9 @@
             {{ form.as_p }}
             {% csrf_token %}
             <input type="submit" class="btn btn-primary" value="submit">
+
         </form>
+        <a style="text-decoration: none; color: black; margin-top: 20px;" class="btn btn-warning"
+           href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
     </div>
 {% endblock %}
