@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('v1/', include('twitterApp.urls')),
-                  url(r'^login', views.user_login, name='login'),
+                  # url(r'^login', views.user_login, name='login'),
                   path('logout/', views.user_logout, name='logout'),
                   url(r'^$', views.see_tweets, name="home"),
                   url(r'^auth/', include('social_django.urls', namespace='social')),

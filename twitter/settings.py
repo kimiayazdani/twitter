@@ -53,6 +53,17 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
+# For handling extra fields
+
+# SOCIAL_AUTH_PIPELINE = (
+#     'social_core.pipeline.social_auth.social_details',
+#     'social_core.pipeline.user.create_user',
+#     'social_core.pipeline.social_auth.load_extra_data',
+#
+#     # Update the user record with any changed info from the auth service.
+#     'social_core.pipeline.user.user_details'
+# )
+
 ROOT_URLCONF = 'twitter.urls'
 
 TEMPLATES = [
@@ -138,9 +149,12 @@ STATICFILES_DIR = STATIC_DIR
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
-# LOGIN_URL = '/twitter/user_login'
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = '/twitter/user_login'
+# LOGIN_URL = '/v1/login'
+# LOGIN_REDIRECT_URL = 'home'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '386868278094-mufebs79f39ekqpugdkh7ctuvoo177te.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'mvcww2Vzsxm2APmnS8Puwv6e'
+
+# AUTH_USER_MODEL = 'twitterApp.TwitterUser'
+# SOCIAL_AUTH_USER_MODEL = 'twitterApp.TwitterUser'

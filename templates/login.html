@@ -12,9 +12,9 @@
             <label for="password"> Password: </label>
             <input type="password" placeholder="Enter your password" name="password">
 
-            <input type="submit" class="btn btn-info" value="Login">
-            <a style="text-decoration: none; color: black; margin-top: 20px;" class="btn btn-warning"
-               href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
+            <input type="submit" class="btn btn-info" value="Login" style="margin-left: 40px;">
+            <a style="text-decoration: none; color: black; margin-left: 40px;" class="btn btn-warning"
+               href="{% url 'social:begin' 'google-oauth2' %}">Sign in with Google</a><br>
         </form>
         {% if danger %}
             <div class="alert alert-info" style="margin-top: 10px;" role="alert">
