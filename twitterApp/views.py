@@ -65,7 +65,8 @@ def add_tweet(request):
 
 
 def see_tweets(request):
-    things = Tweet.objects.all()
+    things = list(Tweet.objects.all())
+    print(things.reverse())
     colors = ["success", "info", "danger", "warning", "default"]
     return render(request=request, template_name='view_tweets.html',
                   context={"things": things, "color": str("tweet tweet-" + random.choice(colors))})
