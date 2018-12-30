@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
-{% load socialaccount %}
 {% block body_block %}
     <div class="jumbotron" style="margin-top: 25%;">
         <form method="post" action="{% url 'twitterApp:login' %}">
@@ -15,13 +14,19 @@
 
             <input type="submit" class="btn btn-primary" value="Login">
 
-            <a style="text-decoration: none; color: black; margin-left: 40px;" class="btn btn-warning"
-               href="{% provider_login_url 'google' %}">Log In with Gmail</a>
+            {#            <a style="text-decoration: none; color: black; margin-left: 40px;" class="btn btn-warning"#}
+            {#               href="{% provider_login_url 'google' %}">Log In with Gmail</a>#}
+
+            <a href="{% url 'social:begin' 'google-oauth2' %}?next=/">
+                <img id="signInButton" style="height: 50px; margin-left: 40px;"
+                     src="http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png"
+                     onclick="document.getElementById('signInButton').src='http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png'">
+            </a>
         </form>
         {% if danger %}
-        <div class="alert alert-info" style="margin-top: 10px;" role="alert">
-            {{ danger }}
-        </div>
+            <div class="alert alert-info" style="margin-top: 10px;" role="alert">
+                {{ danger }}
+            </div>
         {% endif %}
     </div>
 {% endblock %}

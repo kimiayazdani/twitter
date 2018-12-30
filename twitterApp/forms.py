@@ -1,10 +1,18 @@
 from django import forms
-from twitterApp.models import TwitterUser
+from django.contrib.auth.models import User
+from twitterApp.models import Profile
 
 
-class RegistrationForm(forms.ModelForm):
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
     class Meta:
-        model = TwitterUser
-        fields = ['first_name', 'last_name', 'username', 'password', 'email', 'avatar']
+        model = User
+        # fields = ('first_name', 'last_name', 'email', 'username', 'password',)
+        fields = ('username', 'password')
 
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('avatar',)

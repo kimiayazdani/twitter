@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
-{% load socialaccount %}
 
 {% block body_block %}
     <div class="jumbotron" style="margin-top: 25%;">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <h2 style="margin-bottom: 25px;"> Registration Form: </h2>
-            {{ form.as_p }}
+            {{ user_form.as_p }}
+            {{ prof_form.as_p }}
             {% csrf_token %}
             <input type="submit" class="btn btn-primary" value="submit">
 
-            <a style="text-decoration: none; color: black; margin-top: 20px;" class="btn btn-warning"
-               href="{% provider_login_url 'google' %}">Sign up with Gmail</a>
+            <img id="signInButton" style="height: 50px; margin-left: 40px;"
+                     src="http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png"
+                     onclick="document.getElementById('signInButton').src='http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png'">
         </form>
     </div>
 {% endblock %}
+

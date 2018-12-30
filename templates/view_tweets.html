@@ -144,7 +144,7 @@
 
     <div class="jumbotron" style="margin-top: 10%;">
         {% for thing in things %}
-            <div class="row">
+            <div class="row" style="margin-bottom: 20px;">
                 <div class="col-sm-12">
                     <div class="{{ color }}">
                         <div class="tweet-section">
@@ -158,8 +158,7 @@
                             {% endif %}
                             <div class="tweet-information">
                                 <h4 class="tweet-writer-name" style="font-weight:bold"> {{ thing.name }}</h4>
-                                <h6>{{ thing.user.first_name }} {{ thing.user.last_name }} </h6>
-                                <p>{{ thing.user.email }}</p>
+                                <h6>{{ thing.user.user.username}} </h6>
                             </div>
                         </div>
                     </div>

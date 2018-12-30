@@ -38,14 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-
     'twitterApp',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +50,23 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
+
+# For handling extra fields and saving the user Profile
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'twitterApp.pipeline.save_profile',
+)
 
 ROOT_URLCONF = 'twitter.urls'
 
@@ -73,6 +83,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -108,6 +120,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Authentication Backends
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2'
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -133,15 +154,10 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/twitter/user_login'
+# LOGIN_URL = '/v1/login'
+# LOGIN_REDIRECT_URL = 'home'
 
-# Google login
-
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-)
-
-SITE_ID = 1
-
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '823075308570-punr5800bed2i363rcakliu33i3ou6e0.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'b5-Pg12mvcZl582P_KD0h26h'
+# AUTH_USER_MODEL = 'twitterApp.TwitterUser'
+# SOCIAL_AUTH_USER_MODEL = 'twitterApp.TwitterUser'
