@@ -59,10 +59,6 @@
             background-color: #777;
         }
 
-        .tweet.tweet-default .tweet-writer-name {
-            color: #777;
-        }
-
 
         .tweet.tweet-info .tweet-section {
             color: #fff;
@@ -137,9 +133,6 @@
             background-color: #D9534F;
         }
 
-        .tweet.tweet-danger .tweet-writer-name {
-            color: #D9534F;
-        }
     </style>
 
     <div class="jumbotron" style="margin-top: 10%;">
@@ -150,6 +143,7 @@
                         <div class="tweet-section">
                             {{ thing.content }}
                         </div>
+{#                        <img src="{{ MEDIA_URL }}index.png" alt="">#}
                         <div class="tweet-desc">
                             {% if thing.user.avatar %}
                                 <img src="{{ thing.user.avatar.url }}" alt=""/>
