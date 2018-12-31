@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from django.views.generic import View
-from django.http import JsonResponse, Http404, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from . import methods as api_methods

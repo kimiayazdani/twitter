@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-
 from django.contrib.auth.hashers import check_password
 
 from api import models as ApiModels
