@@ -19,17 +19,3 @@ class Tweet(models.Model):
 
     def __str__(self):
         return self.name + " " + self.content
-
-
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     print("I AM HERE ------------------")
-#     if created:
-#         Profile.objects.create(user=instance)
-#
-#
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     print("I AM EVEN HERE!!!!!!!!!!!!!!!!!!!!!!")
-#     instance.profile.save()
-#     # pass

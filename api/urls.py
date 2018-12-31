@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
-
+from .views import version1 as version1View
+from .views import version2 as version2View
 
 urlpatterns = [
-    path('v1' , views.v1_index, name="version1"),
-    path('v2' , views.v2_index, name="version2")
+    path('v1/<str:index>' , version1View.Index.as_view(), name="version1"),
+    path('v2/<str:index>' , version2View.Index.as_view(), name="version2")
 ]
