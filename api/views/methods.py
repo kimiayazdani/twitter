@@ -1,8 +1,6 @@
-from django.http import JsonResponse, Http404, HttpResponse
+from django.http import JsonResponse
 
-from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
-from django.db import models
 
 from api import models as ApiModels
 from twitterApp import models as TwitterModels
@@ -21,6 +19,8 @@ def user_password_was_incorrect() -> JsonResponse:
         'ok': False,
         'description': "Password was Incorrect",
     })
+
+
 def token_was_not_found() -> JsonResponse:
     return JsonResponse(data={
         'ok': False,
@@ -38,14 +38,14 @@ def user_profile_not_found() -> JsonResponse:
 def api_method_not_found() -> JsonResponse:
     return JsonResponse(data={
         'ok': False,
-        'description': "Method Not Found",
+        'description': "Method Not Found - For Security Reasons API Methods are only available through POST method",
     })
 
 
 def get_user(token) -> TwitterModels.Profile:
     try:
-        accessTokenObject = ApiModels.ApiAccessToken.objects.get(token__exact=token)
-        profile = accessTokenObject.user
+        access_token_object = ApiModels.ApiAccessToken.objects.get(token__exact=token)
+        profile = access_token_object.user
     except Exception:
         raise Exception
     return profile
@@ -65,13 +65,25 @@ def login(request) -> JsonResponse:
     })
 
 
+def return_tweet_request_format():
+    return JsonResponse(data={
+        'ok': False,
+        'description': 'Tweet should have tweet-title & tweet-content and must be requested through POST method'
+    })
+
+
 def tweet(request) -> JsonResponse:
     try:
         profile = get_user(request.POST['token'])
     except Exception:
         return token_was_not_found()
+    try:
+        tweet = TwitterModels.Tweet(user=profile, name=request.POST['tweet-title'],
+                                    content=request.POST['tweet-content'])
+    except Exception:
+        return return_tweet_request_format()
+    tweet.save()
     return JsonResponse(data={
         'ok': True,
-        'profile': str(profile)
+        'description': 'Tweet was created successfully'
     })
-

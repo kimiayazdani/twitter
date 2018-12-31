@@ -11,11 +11,12 @@ from . import methods as api_methods
 @method_decorator(csrf_exempt, name='dispatch')
 class Index(View):
     def post(self, request, index, *args, **kwargs):
-        if index != 'tweet':
+        if index != 'tweet' and index != 'login':
             return api_methods.api_method_not_found()
-        return api_methods.tweet(request)
+        if index == 'tweet':
+            return api_methods.tweet(request)
+        if index == 'login':
+            return api_methods.login(request)
 
     def get(self, request, index, *args, **kwargs):
-        if index != 'login':
-            return api_methods.api_method_not_found()
-        return api_methods.login(request)
+        return api_methods.api_method_not_found()
