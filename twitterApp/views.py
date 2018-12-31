@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from twitterApp.forms import UserForm, ProfileForm
+from twitterApp.forms import UserForm, ProfileForm, LoginWithCaptcha
 from twitterApp.models import Tweet, Profile
 from django.contrib.auth.models import User
 
@@ -102,3 +102,15 @@ def edit_profile(request):
 def set_new_token(new_token):
     global access_token
     access_token = new_token
+
+
+def login_captcha():
+    if request.POST:
+        form = LoginWithCaptcha(request.POST)
+
+        if form.is_valid():
+            human = True
+    else:
+        form = LoginWithCaptcha()
+
+    # return render()
