@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block body_block %}
+    <div class="jumbotron" style="margin-top: 25%;">
+        <form method="post" enctype="multipart/form-data">
+            <h2 style="margin-bottom: 25px;"> Edit your profile here: </h2>
+            <label for="username">Username:</label>
+            <input type="text" name="username" value="{{ request.user.username }}"><br/>
+            <div style="min-height: 20px;"></div>
+            <label for="avatar">Avatar:</label>
+            <input type="text" name="avatar" value="{{ img }}"><br/>
+            <div style="min-height: 20px;"></div>
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary" value="submit"><br/>
+            <div style="min-height: 20px;"></div>
+            <a class="btn btn-success" value="Generate Token!">Generate Token</a>
+        </form>
+    </div>
+{% endblock %}
+

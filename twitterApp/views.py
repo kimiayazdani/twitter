@@ -10,6 +10,8 @@ from django.urls import reverse
 
 import random
 
+access_token = "Not refreshed!"
+
 
 def register_user(request):
     if request.method == 'POST':
@@ -33,12 +35,12 @@ def register_user(request):
     user_form = UserForm()
     prof_form = ProfileForm()
     return render(request=request, template_name='registration.html',
-                  context={'user_form': user_form, 'prof_form': prof_form})
+                  context={'user_form': user_form, 'prof_form': prof_form, "tkn": access_token})
 
 
 @login_required(login_url='/v/login')
 def twit(request):
-    return render(request=request, template_name='twits.html')
+    return render(request=request, template_name='twits.html', context={"tkn": access_token})
 
 
 def user_login(request, dng=None, backend='django.contrib.auth.backends.ModelBackend'):
@@ -54,7 +56,7 @@ def user_login(request, dng=None, backend='django.contrib.auth.backends.ModelBac
             return HttpResponseRedirect(reverse('home'))
         else:
             return HttpResponseRedirect(reverse('twitterApp:login'))
-    return render(request=request, template_name='login.html', context={'danger': dng})
+    return render(request=request, template_name='login.html', context={'danger': dng, "tkn": access_token})
 
 
 def user_logout(request):
@@ -77,7 +79,7 @@ def add_tweet(request):
         t = Tweet.objects.get_or_create(user=user_profile, name=name, content=content)[0]
         t.save()
         return see_tweets(request)
-    return render(request=request, template_name='twits.html')
+    return render(request=request, template_name='twits.html', context={"tkn": access_token})
 
 
 def see_tweets(request):
@@ -85,4 +87,18 @@ def see_tweets(request):
     print(things.reverse())
     colors = ["success", "info", "danger", "warning", "default"]
     return render(request=request, template_name='view_tweets.html',
-                  context={"things": things, "color": str("tweet tweet-" + random.choice(colors))})
+                  context={"things": things, "color": str("tweet tweet-" + random.choice(colors)), "tkn": access_token})
+
+
+def edit_profile(request):
+    return render(request=request, template_name='edit_profile.html', context={'img': 'media/hello'})
+
+    user_form = UserForm()
+    prof_form = ProfileForm()
+    return render(request=request, template_name='registration.html',
+                  context={'user_form': user_form, 'prof_form': prof_form})
+
+
+def set_new_token(new_token):
+    global access_token
+    access_token = new_token

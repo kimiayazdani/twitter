@@ -14,9 +14,6 @@
 
             <input type="submit" class="btn btn-primary" value="Login">
 
-            {#            <a style="text-decoration: none; color: black; margin-left: 40px;" class="btn btn-warning"#}
-            {#               href="{% provider_login_url 'google' %}">Log In with Gmail</a>#}
-
             <a href="{% url 'social:begin' 'google-oauth2' %}?next=/">
                 <img id="signInButton" style="height: 50px; margin-left: 40px;"
                      src="http://www.setyourowntests.com/_/rsrc/1468869481521/help/accounts/btn_google_signin_dark_normal_web%402x.png"

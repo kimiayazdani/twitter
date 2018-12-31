@@ -7,14 +7,127 @@
     <title>Twitter</title>
 
     <style>
-     body {
-         background-color: lightslategray;
-     }
+        body {
+            background-color: lightslategray;
+        }
+
+        .itemm,
+        .itemm:before,
+        .itemm:after {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+
+
+        .itemm {
+            text-align: center;
+            display: inline-block;
+            position: relative;
+            margin: 0.25em;
+            padding: 0.67em;
+            border: 2px solid #FFF;
+            overflow: hidden;
+            text-decoration: none;
+            font-size: 1em;
+            outline: none;
+            color: #FFF;
+            background: transparent;
+            width: 900px;
+        }
+
+        .itemm span {
+            -webkit-transition: 0.6s;
+            -moz-transition: 0.6s;
+            -o-transition: 0.6s;
+            transition: 0.6s;
+            -webkit-transition-delay: 0.2s;
+            -moz-transition-delay: 0.2s;
+            -o-transition-delay: 0.2s;
+            transition-delay: 0.2s;
+        }
+
+        .itemm:before,
+        .itemm:after {
+            content: '';
+            position: absolute;
+            top: 0.67em;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            -webkit-transition: .4s, opacity .6s;
+            -moz-transition: .4s, opacity .6s;
+            -o-transition: .4s, opacity .6s;
+            transition: .4s, opacity .6s;
+        }
+
+        /* :before */
+
+        .itemm:before {
+            content: attr(data-hover);
+            -webkit-transform: translate(-150%, 0);
+            -moz-transform: translate(-150%, 0);
+            -ms-transform: translate(-150%, 0);
+            -o-transform: translate(-150%, 0);
+            transform: translate(-150%, 0);
+        }
+
+
+        .itemm:after {
+            content: attr(data-active);
+            -webkit-transform: translate(150%, 0);
+            -moz-transform: translate(150%, 0);
+            -ms-transform: translate(150%, 0);
+            -o-transform: translate(150%, 0);
+            transform: translate(150%, 0);
+        }
+
+
+        .itemm:hover span,
+        .itemm:active span {
+            opacity: 0;
+            -webkit-transform: scale(0.3);
+            -moz-transform: scale(0.3);
+            -ms-transform: scale(0.3);
+            -o-transform: scale(0.3);
+            transform: scale(0.3);
+        }
+
+
+        .itemm:hover:before,
+        .itemm:active:after {
+            opacity: 1;
+            -webkit-transform: translate(0, 0);
+            -moz-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            -o-transform: translate(0, 0);
+            transform: translate(0, 0);
+            -webkit-transition-delay: .4s;
+            -moz-transition-delay: .4s;
+            -o-transition-delay: .4s;
+            transition-delay: .4s;
+        }
+
+
+        .itemm:active:before {
+            -webkit-transform: translate(-150%, 0);
+            -moz-transform: translate(-150%, 0);
+            -ms-transform: translate(-150%, 0);
+            -o-transform: translate(-150%, 0);
+            transform: translate(-150%, 0);
+            -webkit-transition-delay: 0s;
+            -moz-transition-delay: 0s;
+            -o-transition-delay: 0s;
+            transition-delay: 0s;
+        }
+
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark"
-{#     style="position: fixed; width: 100%; margin-top: -1px; z-index: 200;"#}
+        {#     style="position: fixed; width: 100%; margin-top: -1px; z-index: 200;"#}
 >
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
@@ -22,13 +135,16 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="{% url "home" %}">Home <span class="sr-only">(current)</span></a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "logout" %}">Logout</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url "twitterApp:edit" %}">Edit profile</a>
                 </li>
             {% else %}
                 <li class="nav-item">
@@ -41,7 +157,17 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url "twitterApp:tweet" %}">Tweet</a>
             </li>
+            <li>
+                <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+            </li>
         </ul>
+        {% if user.is_authenticated %}
+            <form class="form-inline my-2 my-lg-0">
+                <a class="itemm" data-hover="{{ tkn }}" data-active="{{ tkn }}" style="color: white;"
+                   href="{% url 'api:new_token' %}"><span>
+                    Generate Token</span></a>
+            </form>
+        {% endif %}
     </div>
 </nav>
 <div class="container">
