@@ -10,10 +10,11 @@ from django.urls import reverse
 
 from django.core.mail import send_mail
 
+from twitterApp.exceptions import LoginFailedException
+
 import random
 
 access_token = "Not refreshed!"
-the_rest = True
 
 
 def register_user(request):
@@ -48,34 +49,16 @@ def twit(request):
 
 
 def user_login(request, dng=None, backend='django.contrib.auth.backends.ModelBackend'):
-    global the_rest
     if request.method == 'POST':
-        the_rest = True
-        if False:
-            form = LoginWithCaptcha(request.POST)
-            if not form.is_valid():
-                the_rest = False
-        if the_rest:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = authenticate(username=username, password=password)
-            if user:
-                login(request, user, backend)
-                return HttpResponseRedirect(reverse('home'))
-            else:
-                if False:
-                    user = User.objects.get(username=username)
-                    send_mail(
-                        subject='TWITTER LOGIN WARNING',
-                        message='There were too many attempts for logging in from your account.',
-                        from_email='yazdanikimia@gmail.com',
-                        recipient_list=[user.email],
-                        fail_silently=True
-                    )
-                return HttpResponseRedirect(reverse('twitterApp:login'))
-    if False:
-        form = LoginWithCaptcha()
-        return render(request=request, template_name='login.html', context={'danger':dng, 'tkn':access_token, 'captcha':form})
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user, backend)
+            return HttpResponseRedirect(reverse('home'))
+        else:
+            raise LoginFailedException
+            return HttpResponseRedirect(reverse('twitterApp:login'))
     return render(request=request, template_name='login.html', context={'danger': dng, "tkn": access_token})
 
 
@@ -128,23 +111,24 @@ def login_captcha(request):
     if request.method == 'POST':
         form = LoginWithCaptcha(request.POST)
         if form.is_valid():
-            human = True
             username = request.POST.get('username')
             password = request.POST.get('password')
             user = authenticate(username=username, password=password)
-            send_mail(
-                subject='TWITTER LOGIN WARNING',
-                message='There were too many attempts for logging in from your account.',
-                from_email='yazdanikimia@gmail.com',
-                recipient_list=[user.email]
-            )
             if user:
                 login(request, user, backend)
                 return HttpResponseRedirect(reverse('home'))
             else:
-                return login_captcha(request)
+                raise LoginFailedException
+                user = User.objects.get(username=username)
+                if user:
+                    send_mail(
+                        subject='TWITTER LOGIN WARNING',
+                        message='There were too many attempts for logging in from your account.',
+                        from_email='yazdanikimia@gmail.com',
+                        recipient_list=[user.email],
+                        fail_silently=True
+                    )
+                return HttpResponseRedirect(reverse('twitterApp:login'))
     form = LoginWithCaptcha()
-
-    return render(request=request, template_name='login_captcha.html', context={'tkn': access_token, 'captcha': form})
-
-
+    return render(request=request, template_name='login.html',
+                  context={'danger': dng, 'tkn': access_token, 'captcha': form})

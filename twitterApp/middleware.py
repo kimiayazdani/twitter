@@ -7,6 +7,7 @@ max_requests_count_in_time_range = 10
 
 max_bad_requests_count = 10
 
+
 class HandleMiddleware:
     def __init__(self, get_response, *args, **kwargs):
         self.args = args
@@ -29,9 +30,6 @@ class HandleMiddleware:
             request.user.logged_in_user.session_key = request.session.session_key
             request.user.logged_in_user.save()
 
-
-
-
         try:
             response = self.get_response(request, *self.args, **self.kwargs)
 
@@ -47,5 +45,5 @@ class HandleMiddleware:
 
         except:
 
-            #kim inja mishe
+            # kim inja mishe
             print('shit')
