@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from twitterApp.forms import LoginWithCaptcha
+from twitterApp.forms import UserForm, ProfileForm, LoginWithCaptcha
 from twitterApp.models import Tweet, Profile
 from django.contrib.auth.models import User
 
@@ -122,7 +122,7 @@ def login_captcha(request):
             password = request.POST.get('password')
             user = authenticate(username=username, password=password)
             if user:
-                login(request, user, backend)
+                login(request, user, 'django.contrib.auth.backends.ModelBackend')
                 return HttpResponseRedirect(reverse('home'))
             else:
                 raise LoginFailedException
@@ -137,5 +137,5 @@ def login_captcha(request):
                     )
                 return HttpResponseRedirect(reverse('twitterApp:login'))
     form = LoginWithCaptcha()
-    return render(request=request, template_name='login.html',
-                  context={'danger': dng, 'tkn': access_token, 'captcha': form})
+    return render(request=request, template_name='login_captcha.html',
+                  context={'tkn': access_token, 'captcha': form})
