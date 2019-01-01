@@ -11,4 +11,5 @@ def get_client_ip(request):
     request_info['ip'] = ip
     request_info['browser'] = request.META['HTTP_USER_AGENT']
     request_info['time'] = datetime.datetime.now()
+    return request_info
     # check the format: request_info['time'] = datetime.datetime.now().strftime('%H:%M:%S')
