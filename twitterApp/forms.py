@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from twitterApp.models import Profile
 
-# from captcha.fields import CaptchaField
+from captcha.fields import CaptchaField
 
 
 class UserForm(forms.ModelForm):
@@ -21,5 +21,5 @@ class ProfileForm(forms.ModelForm):
 
 
 class LoginWithCaptcha(forms.Form):
-    # captcha = CaptchaField()
-    pass
+    captcha = CaptchaField()
+    # pass
