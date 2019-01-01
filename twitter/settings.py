@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'twitterApp',
     'api',
     'social_django',
     'captcha',
+    'twitterApp.apps.TwitterappConfig',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'twitterApp.middleware.HandleMiddleware',
+
 ]
 
 # For handling extra fields and saving the user Profile
