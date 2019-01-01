@@ -151,6 +151,7 @@
         }
 
         .snow.foreground {
+
             background-image: url("https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-large-075d267ecbc42e3564c8ed43516dd557.png");
             -webkit-animation-duration: 15s;
             animation-duration: 15s;
@@ -163,6 +164,7 @@
 
         .snow.middleground {
             background-image: url("https://dl6rt3mwcjzxg.cloudfront.net/assets/snow/snow-medium-0b8a5e0732315b68e1f54185be7a1ad9.png");
+
             -webkit-animation-duration: 20s;
             animation-duration: 20s;
         }
@@ -227,15 +229,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "logout" %}">Logout</a>
                 </li>
-{#                <li>#}
-{#                    <a class="nav-link" href="{% url "twitterApp:edit" %}">Edit profile</a>#}
-{#                </li>#}
+                {#                <li>#}
+                {#                    <a class="nav-link" href="{% url "twitterApp:edit" %}">Edit profile</a>#}
+                {#                </li>#}
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "twitterApp:register" %}">Register</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "twitterApp:login" %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "twitterApp:captcha" %}">LoginCapt</a>
                 </li>
             {% endif %}
             <li class="nav-item">

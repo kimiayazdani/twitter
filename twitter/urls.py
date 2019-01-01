@@ -27,5 +27,6 @@ urlpatterns = [
                   path('logout/', views.user_logout, name='logout'),
                   path('', views.see_tweets, name="home"),
                   url(r'^auth/', include('social_django.urls', namespace='social')),
-                  path('api/', include(api.urls))
+                  path('api/', include(api.urls)),
+                  url(r'^captcha/', include('captcha.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

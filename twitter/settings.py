@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'twitterApp',
     'api',
     'social_django',
+    'captcha',
 ]
 
 MIDDLEWARE = [

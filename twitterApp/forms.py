@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from twitterApp.models import Profile
 
-from captcha.fields import CaptchaField
+from captcha.fields import ReCaptchaField
 
 
 class UserForm(forms.ModelForm):
@@ -11,7 +11,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         # fields = ('first_name', 'last_name', 'email', 'username', 'password',)
-        fields = ('username', 'password')
+        fields = ('username', 'password', 'email')
 
 
 class ProfileForm(forms.ModelForm):
@@ -20,9 +20,5 @@ class ProfileForm(forms.ModelForm):
         fields = ('avatar',)
 
 
-class LoginWithCaptcha(forms.ModelForm):
-    captcha = CaptchaField()
-
-    class Meta:
-        model = User
-        fields = ('username', 'password')
+class LoginWithCaptcha(forms.Form):
+    captcha = ReCaptchaField(attr={'theme': 'clean'})

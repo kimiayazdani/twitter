@@ -8,6 +8,8 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
+from django.core.mail import send_mail
+
 import random
 
 access_token = "Not refreshed!"
@@ -23,6 +25,7 @@ def register_user(request):
             user.save()
             profile = prof_form.save(commit=False)
             profile.user = user
+            login(request, user, 'django.contrib.auth.backends.ModelBackend')
             if 'avatar' in request.POST:
                 profile.avatar = request.POST['avatar']
             try:
@@ -45,8 +48,6 @@ def twit(request):
 
 def user_login(request, dng=None, backend='django.contrib.auth.backends.ModelBackend'):
     if request.method == 'POST':
-        print(User.objects.all())
-        print(Profile.objects.all())
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
@@ -104,13 +105,27 @@ def set_new_token(new_token):
     access_token = new_token
 
 
-def login_captcha():
-    if request.POST:
+def login_captcha(request):
+    if request.method == 'POST':
         form = LoginWithCaptcha(request.POST)
-
         if form.is_valid():
-            human = True
-    else:
-        form = LoginWithCaptcha()
+            human = true
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(username=username, password=password)
+            # send_mail(
+            #     subject='TWITTER LOGIN WARNING',
+            #     message='There were too many attempts for logging in from your account.',
+            #     from_email='yazdanikimia@gmail.com',
+            #     recipient_list=[user.email]
+            # )
+            if user:
+                login(request, user, backend)
+                return HttpResponseRedirect(reverse('home'))
+            else:
+                return login_captcha(request)
+    form = LoginWithCaptcha()
 
-    # return render()
+    return render(request=request, template_name='login_captcha.html', context={'tkn': access_token, 'captcha': form})
+
+
