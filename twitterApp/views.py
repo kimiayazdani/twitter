@@ -109,7 +109,7 @@ def login_captcha(request):
     if request.method == 'POST':
         form = LoginWithCaptcha(request.POST)
         if form.is_valid():
-            human = true
+            human = True
             username = request.POST.get('username')
             password = request.POST.get('password')
             user = authenticate(username=username, password=password)

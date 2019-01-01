@@ -31,5 +31,7 @@ class LoggedInUser(models.Model):
 
 class RequestLog(models.Model):
     ip = models.CharField(max_length=100)
-    browser = models.CharField(max_length=100)
+    user_agent = models.CharField(max_length=100)
+    allowed_request = models.BooleanField(default=True)
     time_stamp = models.DateTimeField(auto_now_add=True)
+
