@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from twitterApp.forms import UserForm, ProfileForm, LoginWithCaptcha
+from twitterApp.forms import LoginWithCaptcha
 from twitterApp.models import Tweet, Profile
 from django.contrib.auth.models import User
 
@@ -45,6 +45,7 @@ def register_user(request):
 
 @login_required(login_url='/v/login')
 def twit(request):
+
     return render(request=request, template_name='twits.html', context={"tkn": access_token})
 
 
@@ -101,12 +102,7 @@ def see_tweets(request):
 
 
 def edit_profile(request):
-    return render(request=request, template_name='edit_profile.html', context={'img': 'media/hello'})
-
-    user_form = UserForm()
-    prof_form = ProfileForm()
-    return render(request=request, template_name='registration.html',
-                  context={'user_form': user_form, 'prof_form': prof_form})
+    pass
 
 
 def set_new_token(request, new_token):
