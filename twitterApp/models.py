@@ -5,6 +5,7 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
+    access_token = models.CharField(max_length=1000000, default="Not Refreshed")
     user = models.OneToOneField(User, unique=True, null=False, db_index=True, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='avatars', blank=True)
 

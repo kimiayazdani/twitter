@@ -82,15 +82,22 @@ def add_tweet(request):
         t = Tweet.objects.get_or_create(user=user_profile, name=name, content=content)[0]
         t.save()
         return see_tweets(request)
-    return render(request=request, template_name='twits.html', context={"tkn": access_token})
+    profile = Profile.objects.get(user=request.user)
+    return render(request=request, template_name='twits.html', context={"tkn": profile.access_token})
 
 
 def see_tweets(request):
     things = list(Tweet.objects.all())
     print(things.reverse())
     colors = ["success", "info", "danger", "warning", "default"]
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user=request.user)
+        return render(request=request, template_name='view_tweets.html',
+                      context={"things": things, "color": str("tweet tweet-" + random.choice(colors)),
+                               "tkn": profile.access_token})
     return render(request=request, template_name='view_tweets.html',
-                  context={"things": things, "color": str("tweet tweet-" + random.choice(colors)), "tkn": access_token})
+                  context={"things": things, "color": str("tweet tweet-" + random.choice(colors)),
+                           "tkn": "Not refreshed"})
 
 
 def edit_profile(request):
@@ -102,9 +109,13 @@ def edit_profile(request):
                   context={'user_form': user_form, 'prof_form': prof_form})
 
 
-def set_new_token(new_token):
+def set_new_token(request, new_token):
     global access_token
     access_token = new_token
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    setattr(profile, 'access_token', new_token)
+    profile.save()
 
 
 def login_captcha(request):

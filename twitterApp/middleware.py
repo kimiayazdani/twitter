@@ -3,9 +3,9 @@ from . import methods
 from django.http import HttpResponseForbidden, HttpResponse
 
 time_range = 1000000
-max_requests_count_in_time_range = 10
+max_requests_count_in_time_range = 20000
 
-max_bad_requests_count = 10
+max_bad_requests_count = 20000
 
 
 class HandleMiddleware:

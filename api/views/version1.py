@@ -27,5 +27,5 @@ class Index(View):
 def get_new_token(request):
     user_profile = Profile.objects.get(user=request.user)
     new_token = api_methods.create_new_access_token(profile=user_profile)
-    set_new_token(new_token=new_token)
+    set_new_token(request=request, new_token=new_token)
     return see_tweets(request=request)
